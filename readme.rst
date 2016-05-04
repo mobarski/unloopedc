@@ -5,7 +5,7 @@ UNLOOPED C
 Introduction
 ============
 
-Unlooped C is a C language extension for elegant implementation of multi-dimensional array algorithms (eg. machine learning).
+Unlooped C is a C language extension for elegant implementation of algorithms using multi-dimensional arrays (eg. machine learning).
 
 Unlooped C separates loop statements from formulas making C code as elegant as NumPy or Fortran 90.
 
@@ -31,4 +31,8 @@ Unlooped C separates loop statements from formulas making C code as elegant as N
 			center[k,c] += data[r,c];	// r@ c@
 			center[k,c] /= k_cnt[k];	// k@ c@
 		}
+		
+		free(best_k); free(k_cnt);
 	}
+
+Unlooped C is implemented in Python as C language preprocessor.
