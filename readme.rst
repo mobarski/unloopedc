@@ -42,7 +42,7 @@ K-means clustering (Manhattan distance):
 			center[k,c] /= k_cnt[k];	// k@ c@
 		}
 		
-		free(best_k); free(k_cnt); del_rank(rnk);
+		free(k_cnt); del_rank(rnk);
 	}
 
 K-nearest neighbors (Manhattan distance):
