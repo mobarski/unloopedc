@@ -66,3 +66,36 @@ K-nearest neighbors (Manhattan distance):
 		del_rank(rnk);
 		return nn;
 	}	
+
+Loop Types
+==========
+
+.. code::
+
+	data[r] = 0; // r@       -- automatic loop boundaries
+	data[r] = 0; // r@1:     -- explicit lower boundary, automatic upper
+	data[r] = 0; // r@:10    -- explicit upper boundary, automatic lower
+	
+	data[r] = 0; // r@1:10   -- explicit boundaries
+	data[r] = 0; // r@10     -- explicit loop count, 0 as implicit lower boundary, 10-1 as upper
+	
+	data[r,c] += sample[k,c]; // r@ k@  c@    -- multiple automatic loops
+	data[r,c] += sample[k,c]; // r@ k@r c@:k  -- multiple loops with different boundries
+	
+	d = 0;          // r@       -- no array, loop boundries copied from closest loop
+	d += data[r,c]; // r@1: c@  -- loop baundaries from this line will be used above and below
+	out[r] = d;	// r@@      -- override automatic loop boundries, copy from closest loop
+
+Defining Arrays
+===============
+
+.. code::
+	
+	@new float data[10,10,10];  // allocate new 3d float array
+	@new int data[20,-10:20];   // allocate new 2d int array, with custom index range
+	@def data[100,20,20];       // define dimensionality of existing pointer
+
+
+Benchmark
+=========
+
