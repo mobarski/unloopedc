@@ -11,8 +11,8 @@ Unlooped C separates loop statements from formulas making C code as elegant as N
 
 Unlooped C is implemented in Python as C language preprocessor.
 
-Examples
-========
+Code Examples
+=============
 
 K-means clustering (Manhattan distance):
 
@@ -42,7 +42,7 @@ K-means clustering (Manhattan distance):
 			center[k,c] /= k_cnt[k];	// k@ c@
 		}
 		
-		free(k_cnt); del_rank(rnk);
+		free(k_cnt); free(best_k); del_rank(rnk);
 	}
 
 K-nearest neighbors (Manhattan distance):
@@ -67,8 +67,8 @@ K-nearest neighbors (Manhattan distance):
 		return nn;
 	}	
 
-Loop Types
-==========
+Loop Examples
+=============
 
 .. code::
 
@@ -85,9 +85,11 @@ Loop Types
 	d = 0;          // r@       -- no array, loop boundries copied from closest loop
 	d += data[r,c]; // r@1: c@  -- loop baundaries from this line will be used above and below
 	out[r] = d;	// r@@      -- override automatic loop boundries, copy from closest loop
+	
+	data[r@,c] += sample[k@,c@4:10]; // loop definitions in the code
 
-Defining Arrays
-===============
+Array Definition Examples
+=========================
 
 .. code::
 	
@@ -99,3 +101,10 @@ Defining Arrays
 Benchmark
 =========
 
+	====== ====================== ======== ===== ========
+	task   config                 unlooped numpy gfortran
+	====== ====================== ======== ===== ========
+	kmeans R=1000 C=100 K=10 I=10 .        .     .
+	====== ====================== ======== ===== ========
+
+.. http://codingwiththomas.blogspot.com/2012/01/bsp-k-means-clustering-benchmark.html
