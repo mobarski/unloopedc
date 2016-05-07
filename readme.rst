@@ -104,7 +104,9 @@ Benchmark
 	====== ====================== ======== ===== ========
 	task   config                 unlooped numpy gfortran
 	====== ====================== ======== ===== ========
-	kmeans R=1000 C=100 K=10 I=10 .        .     .
+	kmeans R=1000 C=100 K=10 I=10 0.054s   .     .
+	kmeans R=1M   C=10  K=10 I=20 14.3s    .     .
 	====== ====================== ======== ===== ========
 
 .. http://codingwiththomas.blogspot.com/2012/01/bsp-k-means-clustering-benchmark.html
+.. http://wiki.apache.org/hama/Benchmarks
