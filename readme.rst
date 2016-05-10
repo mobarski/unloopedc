@@ -67,6 +67,50 @@ K-nearest neighbors (Manhattan distance):
 		return nn;
 	}	
 
+
+Euclidean distance:
+
+.. code::
+
+	...
+	dist = 0.0;			// r@ m@
+	d = model[m,c] - data[r,c];	// r@ m@ c@
+	dist += d*d;			// r@ m@ c@
+	dist = sqrt(dist);		// r@ m@
+	...
+
+
+Minkowski distance:
+
+.. code::
+
+	...
+	dist = 0.0;				// r@ m@
+	dist += pow(model[m,c] - data[r,c], p);	// r@ m@ c@
+	dist = pow(dist, 1/p);			// r@ m@	
+	...
+
+
+Weighted Manhattan distance:
+
+.. code::
+
+	...
+	dist += weight[c] * fabs(model[m,c] - data[r,c]); // r@ m@ c@
+	...
+
+Chebyshev distance:
+
+.. code::
+
+	rank d_max = new_rank(1);
+	...
+	rank_reset(d_max);			// r@ m@
+	d = fabs(model[m,c] - data[r,c]);	// r@ m@ c@
+	rank_push_max(d_max,d,c);		// r@ m@ c@
+	dist = rank_pop(d_max).f;		// r@ m@
+	...
+
 Loop Examples
 =============
 
@@ -98,15 +142,36 @@ Array Definition Examples
 	@def data[100,20,20];       // define dimensionality of existing pointer
 
 
-Benchmark
-=========
+Benchmark - kmeans
+==================
+	
+	Rows: 1 million, Columns: 10, Iterations: 20, Clusters: 10
+	
+	====== ====================== ========================= ===
+	time   software               hardware                  url
+	====== ====================== ========================= ===
+	14.3s  Unlooped C, gcc-4.9    Intel Atom N570
+	44.5s  Hadoop 0.20, Hama 0.4  16 nodes, 256 cores        1 
+	====== ====================== ========================= ===
+	
+	
+	Rows: 0.1 million, Columns: 2, Iterations: 15, Clusters: 10
 
-	====== ====================== ======== ===== ========
-	task   config                 unlooped numpy gfortran
-	====== ====================== ======== ===== ========
-	kmeans R=1000 C=100 K=10 I=10 0.054s   .     .
-	kmeans R=1M   C=10  K=10 I=20 14.3s    .     .
-	====== ====================== ======== ===== ========
+	====== ==================== =========================== ===
+	time   software             hardware                    url
+	====== ==================== =========================== ===
+	0.43s  Unlooped C, gcc-4.9  Intel Atom N570            
+	0.22s  C, gcc-4.8           Intel i7-2620M               2
+	0.004s C, cuda 7.5          Nvidia GeForce GTX TITAN X   2
+	====== ==================== =========================== ===
+
+(1) http://wiki.apache.org/hama/Benchmarks
+(2) https://github.com/andreaferretti/kmeans/blob/master/results
 
 .. http://codingwiththomas.blogspot.com/2012/01/bsp-k-means-clustering-benchmark.html
-.. http://wiki.apache.org/hama/Benchmarks
+
+OpenMP integration
+==================
+
+TODO
+
